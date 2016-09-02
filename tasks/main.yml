@@ -1,0 +1,18 @@
+---
+- name: Install samba client
+  yum: name={{ smbclient }} state=present
+
+- name: Install CIFS utilities
+  yum: name={{ cifsutils }} state=present
+
+- name: Create mountpoint before mounting
+  file: path={{ mountpoint }} state=directory owner=root group=root mode=0755 recurse=yes
+  run_once: true
+
+- name: Create credential file
+  copy: dest=/root/.{{ smbuser }}-cifs content="username={{ smbuser }}\npassword={{ smbpassword }}" owner=root group=root mode=0600
+  when: smbuser is defined
+
+- name: Mount single CIFS path
+  mount: state="present" fstype="cifs" opts="credentials=/root/.{{ smbuser }}-cifs,vers={{ smbversion }}" src={{ smbsrc }} name={{ mountpoint }}
+  when: smbuser is defined

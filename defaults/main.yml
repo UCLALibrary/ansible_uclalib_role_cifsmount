@@ -1,0 +1,4 @@
+---
+
+smbclient: samba
+cifsutils: cifs-utils
