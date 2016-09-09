@@ -6,7 +6,7 @@
   yum: name={{ cifsutils }} state=present
 
 - name: Create mountpoint before mounting
-  file: path={{ mountpoint }} state=directory owner=root group=root mode=0755 recurse=yes
+  file: path={{ smbmountpoint }} state=directory owner=root group=root mode=0755 recurse=yes
   run_once: true
 
 - name: Create credential file
@@ -14,5 +14,5 @@
   when: smbuser is defined
 
 - name: Mount single CIFS path
-  mount: state="present" fstype="cifs" opts="credentials=/root/.{{ smbuser }}-cifs,vers={{ smbversion }}" src={{ smbsrc }} name={{ mountpoint }}
+  mount: state="present" fstype="cifs" opts="credentials=/root/.{{ smbuser }}-cifs,vers={{ smbversion }}" src={{ smbsrc }} name={{ smbmountpoint }}
   when: smbuser is defined
