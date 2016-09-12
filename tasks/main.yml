@@ -6,7 +6,7 @@
   yum: name={{ cifsutils }} state=present
 
 - name: Create mountpoint before mounting
-  file: path={{ smbmountpoint }} state=directory owner=root group=root mode=0755 recurse=yes
+  file: path={{ smbmountpoint }} state=directory owner=root group=root mode=0755
   run_once: true
 
 - name: Create credential file
